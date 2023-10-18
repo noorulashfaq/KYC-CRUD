@@ -1,0 +1,24 @@
+GET http://localhost:1122/listAll
+
+POST http://localhost:1122/insert
+Content-Type: application/json
+
+{
+    "id":154,
+    "name":"Sri",
+    "dob":"2004-09-01",
+    "dept":"CSE",
+    "gender":"Female",
+    "age":19
+}
+
+PUT http://localhost:1122/update
+Content-Type: application/json
+
+{
+    "dob":"0000-00-00",
+    "age":20,
+    "id":154
+}
+
+DELETE http://localhost:1122/remove/154
