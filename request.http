@@ -1,0 +1,26 @@
+POST http://localhost:1122/insert
+Content-Type: application/json
+
+{
+    "acc_number":32789012,
+    "acc_holder":"Sasi",
+    "acc_balance":10000
+}
+
+###
+
+GET http://localhost:1122/listAll
+
+###
+
+PUT http://localhost:1122/update/123456789
+Content-Type: application/json
+
+{
+    "acc_holder":"Sasi",
+    "acc_balance":50000
+}
+
+###
+
+DELETE http://localhost:1122/remove/123456789

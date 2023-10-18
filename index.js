@@ -1,8 +1,10 @@
 const expRef = require('express')
 const sqlRef = require('mysql2')
 const bodyParser = require('body-parser')
+const cors=require('cors')
 
 const app = expRef()
+app.use(cors())
 
 //DB connect
 const db = sqlRef.createConnection(
@@ -10,7 +12,7 @@ const db = sqlRef.createConnection(
         "host":"localhost",
         "user":"root",
         "password":"",
-        "database":"testfk"
+        "database":"newschema"
     }
 )
 
@@ -29,7 +31,7 @@ db.connect((err)=>{
 //get mapping
 //async - multiple interactions
 app.get('/listAll',async(req,res)=>{
-    const sql = "select * from mec_students"
+    const sql = "select * from account_details"
     db.query(sql,(err,records)=>{
         if(err){
             res.status(500).json({"error":err.message})
@@ -43,10 +45,10 @@ app.get('/listAll',async(req,res)=>{
 
 //post mapping
 app.post('/insert',async(req,res)=>{
-    const {id,name,dob,dept,gender,age} = req.body
-    const sql = "insert into mec_students values (?,?,?,?,?,?)"
+    const {acc_number,acc_holder,acc_balance} = req.body
+    const sql = "insert into account_details values (?,?,?)"
     //update mec_students set DOB=?, Age=? where id=?
-    db.query(sql,[id,name,dob,dept,age,gender],(err,result)=>{
+    db.query(sql,[acc_number,acc_holder,acc_balance],(err,result)=>{
         if(err){
             res.status(500).json({"error":err.message})
         }
@@ -55,10 +57,10 @@ app.post('/insert',async(req,res)=>{
 })
 
 //put mapping
-app.put('/update',async(req,res)=>{
-    const {dob,id,age} = req.body
-    const sql = "update mec_students set DOB=?, Age=? where id=?"
-    db.query(sql,[dob,age,id],(err,result)=>{
+app.put('/update/:acc_number',async(req,res)=>{
+    const {acc_holder,acc_balance} = req.body
+    const sql = "update account_details set acc_holder=?, acc_balance=? where acc_number=?"
+    db.query(sql,[acc_holder,acc_balance,req.params.acc_number],(err,result)=>{
         if(err){
             res.status(500).json({"error":err.message})
         }
@@ -67,10 +69,9 @@ app.put('/update',async(req,res)=>{
 })
 
 //delete mapping
-app.delete('/remove/:num',async(req,res)=>{
-    const num = parseInt(req.params.num)
-    const sql="delete from mec_students where id=?"
-    db.query(sql,[num],(err,result)=>{
+app.delete('/remove/:acc_number',async(req,res)=>{
+    const sql="delete from account_details where acc_number=?"
+    db.query(sql,[req.params.acc_number],(err,result)=>{
         if(err){
             res.status(500).json({"error":err.message})
         }
@@ -81,3 +82,6 @@ app.delete('/remove/:num',async(req,res)=>{
 app.listen(1122,()=>{
     console.log("My server is running")
 })
+
+
+/*-------------------------------------------------------------------------*/
