@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "acc_number":32789012,
-    "acc_holder":"Sasi",
+    "acc_holder":"Noorul",
     "acc_balance":10000
 }
 
@@ -17,7 +17,7 @@ PUT http://localhost:1122/update/123456789
 Content-Type: application/json
 
 {
-    "acc_holder":"Sasi",
+    "acc_holder":"Subash",
     "acc_balance":50000
 }
 
